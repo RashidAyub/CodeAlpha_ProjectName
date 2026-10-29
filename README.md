@@ -9,9 +9,20 @@ This repository contains tasks and projects completed for the **CodeAlpha Fronte
 | Task | Title | Tech Stack | Status | Folder / Live Link |
 |---|---|---|---|---|
 | **Task 1** | **Professional Responsive Image Gallery** | HTML5, CSS3, Vanilla JavaScript | ✅ Completed | [Task_1_Image_Gallery](./Task_1_Image_Gallery/) |
-| **Task 2** | Build a Calculator | HTML5, CSS3, JavaScript | ⏳ Upcoming | — |
+| **Task 2** | **Professional Calculator (QuantumCalc)** | HTML5, CSS3, Vanilla JavaScript | ✅ Completed | [Task_2_Calculator](./Task_2_Calculator/) |
 | **Task 3** | Portfolio Site | HTML5, CSS3, JavaScript | ⏳ Upcoming | — |
 | **Task 4** | **Professional Music Player (AuraBeats)** | HTML5, CSS3, Vanilla JavaScript | ✅ Completed | [Task_4_Music_Player](./Task_4_Music_Player/) |
+
+---
+
+## 🌟 Task 2: Calculator (QuantumCalc) Highlights
+
+- **Aesthetic:** Modern obsidian glassmorphism (`backdrop-filter: blur(24px)`), ambient floating glow orbs, tactile 3D buttons, and 4 theme modes (Obsidian Neon, Cyber Glow, Aurora Emerald, Pure Platinum).
+- **Math Engine:** Safe tokenized evaluator handling operator precedence, brackets, unary negatives, intelligent percentages, and precision floating-point fix.
+- **Real-Time Live Preview:** Instant calculation preview display as numbers and operators are typed before pressing `=`.
+- **Keyboard & Tactile Feedback:** Full keyboard mapping with visual on-screen key depression and real-time synthesized Web Audio click sounds.
+- **Scientific & Memory Registers:** Expandable scientific drawer (`√`, `x²`, `xʸ`, `¹/ₓ`, `π`, `e`, `|x|`, `n!`) and full memory functions (`MC`, `MR`, `M+`, `M−`, `MS`).
+- **Calculation History Tape:** Slide-out history drawer with timestamped expressions, one-click copy, and instant expression/result reuse.
 
 ---
 

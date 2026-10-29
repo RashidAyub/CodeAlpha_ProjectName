@@ -1,0 +1,1322 @@
+/* ==========================================================================
+   QuantumCalc — Modern Professional Web Calculator
+   Designed & Developed by Rashid Ayub | CodeAlpha Internship
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties & Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Default Theme: Obsidian Neon (Dark) */
+  --bg-primary: #0a0d14;
+  --bg-secondary: #111622;
+  --bg-card: rgba(18, 24, 38, 0.75);
+  --bg-screen: rgba(10, 14, 22, 0.85);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(99, 102, 241, 0.5);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-preview: #38bdf8;
+
+  /* Button Color Tokens */
+  --btn-num-bg: rgba(30, 41, 59, 0.6);
+  --btn-num-hover: rgba(51, 65, 85, 0.8);
+  --btn-num-active: rgba(71, 85, 105, 0.9);
+  --btn-num-text: #f1f5f9;
+  --btn-num-border: rgba(255, 255, 255, 0.06);
+
+  --btn-op-bg: rgba(99, 102, 241, 0.18);
+  --btn-op-hover: rgba(99, 102, 241, 0.35);
+  --btn-op-active: rgba(99, 102, 241, 0.5);
+  --btn-op-text: #818cf8;
+  --btn-op-border: rgba(129, 140, 248, 0.3);
+
+  --btn-fn-bg: rgba(15, 23, 42, 0.7);
+  --btn-fn-hover: rgba(30, 41, 59, 0.85);
+  --btn-fn-text: #cbd5e1;
+  --btn-fn-border: rgba(255, 255, 255, 0.08);
+
+  --btn-clear-bg: rgba(239, 68, 68, 0.15);
+  --btn-clear-hover: rgba(239, 68, 68, 0.28);
+  --btn-clear-text: #f87171;
+  --btn-clear-border: rgba(239, 68, 68, 0.35);
+
+  --btn-equals-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+  --btn-equals-hover: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+  --btn-equals-text: #ffffff;
+  --btn-equals-shadow: 0 8px 24px -4px rgba(99, 102, 241, 0.45);
+
+  /* Orbs for ambient backdrop */
+  --orb-1-color: rgba(99, 102, 241, 0.18);
+  --orb-2-color: rgba(236, 72, 153, 0.15);
+  --orb-3-color: rgba(56, 189, 248, 0.15);
+
+  /* Elevation Shadows & Glass Radii */
+  --card-radius: 28px;
+  --btn-radius: 18px;
+  --shadow-card: 0 24px 60px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--border-subtle);
+  --shadow-inner-screen: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+
+  /* Transition Speeds */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme 2: Cyber Glow */
+[data-theme="cyberpunk"] {
+  --bg-primary: #070913;
+  --bg-secondary: #0d1124;
+  --bg-card: rgba(13, 17, 36, 0.8);
+  --bg-screen: rgba(7, 9, 20, 0.9);
+  --border-subtle: rgba(244, 63, 94, 0.15);
+  --border-focus: rgba(244, 63, 94, 0.6);
+
+  --text-primary: #ffffff;
+  --text-secondary: #fda4af;
+  --text-muted: #881337;
+  --text-preview: #facc15;
+
+  --btn-num-bg: rgba(20, 24, 48, 0.7);
+  --btn-num-hover: rgba(35, 42, 80, 0.85);
+  --btn-num-active: rgba(45, 55, 105, 0.95);
+  --btn-num-text: #ffe4e6;
+  --btn-num-border: rgba(244, 63, 94, 0.15);
+
+  --btn-op-bg: rgba(244, 63, 94, 0.2);
+  --btn-op-hover: rgba(244, 63, 94, 0.35);
+  --btn-op-active: rgba(244, 63, 94, 0.5);
+  --btn-op-text: #fb7185;
+  --btn-op-border: rgba(244, 63, 94, 0.4);
+
+  --btn-clear-bg: rgba(234, 179, 8, 0.2);
+  --btn-clear-hover: rgba(234, 179, 8, 0.35);
+  --btn-clear-text: #fde047;
+  --btn-clear-border: rgba(234, 179, 8, 0.4);
+
+  --btn-equals-bg: linear-gradient(135deg, #f43f5e 0%, #fb7185 50%, #facc15 100%);
+  --btn-equals-hover: linear-gradient(135deg, #e11d48 0%, #f43f5e 50%, #eab308 100%);
+  --btn-equals-text: #050505;
+  --btn-equals-shadow: 0 8px 24px -4px rgba(244, 63, 94, 0.5);
+
+  --orb-1-color: rgba(244, 63, 94, 0.22);
+  --orb-2-color: rgba(250, 204, 21, 0.15);
+  --orb-3-color: rgba(168, 85, 247, 0.2);
+}
+
+/* Theme 3: Aurora Emerald */
+[data-theme="aurora"] {
+  --bg-primary: #061412;
+  --bg-secondary: #0a1f1b;
+  --bg-card: rgba(10, 31, 27, 0.8);
+  --bg-screen: rgba(6, 20, 18, 0.9);
+  --border-subtle: rgba(52, 211, 153, 0.15);
+  --border-focus: rgba(16, 185, 129, 0.5);
+
+  --text-primary: #f0fdf4;
+  --text-secondary: #a7f3d0;
+  --text-muted: #065f46;
+  --text-preview: #34d399;
+
+  --btn-num-bg: rgba(15, 45, 39, 0.65);
+  --btn-num-hover: rgba(20, 60, 52, 0.85);
+  --btn-num-active: rgba(25, 75, 65, 0.95);
+  --btn-num-text: #e6fffa;
+  --btn-num-border: rgba(52, 211, 153, 0.12);
+
+  --btn-op-bg: rgba(16, 185, 129, 0.2);
+  --btn-op-hover: rgba(16, 185, 129, 0.35);
+  --btn-op-active: rgba(16, 185, 129, 0.5);
+  --btn-op-text: #6ee7b7;
+  --btn-op-border: rgba(16, 185, 129, 0.35);
+
+  --btn-clear-bg: rgba(248, 113, 113, 0.2);
+  --btn-clear-hover: rgba(248, 113, 113, 0.35);
+  --btn-clear-text: #fca5a5;
+  --btn-clear-border: rgba(248, 113, 113, 0.4);
+
+  --btn-equals-bg: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+  --btn-equals-hover: linear-gradient(135deg, #047857 0%, #059669 50%, #10b981 100%);
+  --btn-equals-text: #022c22;
+  --btn-equals-shadow: 0 8px 24px -4px rgba(16, 185, 129, 0.45);
+
+  --orb-1-color: rgba(16, 185, 129, 0.2);
+  --orb-2-color: rgba(56, 189, 248, 0.15);
+  --orb-3-color: rgba(20, 184, 166, 0.15);
+}
+
+/* Theme 4: Pure Platinum (Light Theme) */
+[data-theme="platinum"] {
+  --bg-primary: #e2e8f0;
+  --bg-secondary: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-screen: rgba(241, 245, 249, 0.95);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-focus: rgba(79, 70, 229, 0.5);
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --text-preview: #2563eb;
+
+  --btn-num-bg: #ffffff;
+  --btn-num-hover: #f1f5f9;
+  --btn-num-active: #e2e8f0;
+  --btn-num-text: #1e293b;
+  --btn-num-border: rgba(15, 23, 42, 0.08);
+
+  --btn-op-bg: rgba(99, 102, 241, 0.12);
+  --btn-op-hover: rgba(99, 102, 241, 0.2);
+  --btn-op-active: rgba(99, 102, 241, 0.3);
+  --btn-op-text: #4f46e5;
+  --btn-op-border: rgba(99, 102, 241, 0.25);
+
+  --btn-fn-bg: #f8fafc;
+  --btn-fn-hover: #edf2f7;
+  --btn-fn-text: #334155;
+  --btn-fn-border: rgba(15, 23, 42, 0.08);
+
+  --btn-clear-bg: rgba(239, 68, 68, 0.12);
+  --btn-clear-hover: rgba(239, 68, 68, 0.2);
+  --btn-clear-text: #dc2626;
+  --btn-clear-border: rgba(239, 68, 68, 0.25);
+
+  --btn-equals-bg: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #3b82f6 100%);
+  --btn-equals-hover: linear-gradient(135deg, #4338ca 0%, #4f46e5 50%, #2563eb 100%);
+  --btn-equals-text: #ffffff;
+  --btn-equals-shadow: 0 8px 24px -4px rgba(79, 70, 229, 0.35);
+
+  --orb-1-color: rgba(99, 102, 241, 0.12);
+  --orb-2-color: rgba(236, 72, 153, 0.08);
+  --orb-3-color: rgba(56, 189, 248, 0.1);
+
+  --shadow-card: 0 20px 45px -10px rgba(15, 23, 42, 0.12), 0 0 0 1px var(--border-subtle);
+  --shadow-inner-screen: inset 0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+/* --------------------------------------------------------------------------
+   2. Base Reset & Typography
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  position: relative;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  color: inherit;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. Ambient Decorative Glow Elements
+   -------------------------------------------------------------------------- */
+.ambient-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;
+  animation: floatOrbs 18s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  width: 480px;
+  height: 480px;
+  background: var(--orb-1-color);
+  top: -10%;
+  left: -10%;
+}
+
+.orb-2 {
+  width: 440px;
+  height: 440px;
+  background: var(--orb-2-color);
+  bottom: -5%;
+  right: -5%;
+  animation-duration: 22s;
+  animation-direction: alternate-reverse;
+}
+
+.orb-3 {
+  width: 360px;
+  height: 360px;
+  background: var(--orb-3-color);
+  top: 40%;
+  left: 60%;
+  animation-duration: 16s;
+}
+
+@keyframes floatOrbs {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.08); }
+  100% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+/* --------------------------------------------------------------------------
+   4. Application Layout
+   -------------------------------------------------------------------------- */
+.app-container {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+/* Header & Controls Bar */
+.app-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding: 0.5rem 0.25rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #818cf8;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.brand-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.brand-title span {
+  background: linear-gradient(135deg, #818cf8, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.15rem 0.5rem;
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 20px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.action-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all var(--transition-fast);
+}
+
+.action-btn:hover {
+  background: var(--btn-num-hover);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+  transform: translateY(-1px);
+}
+
+.action-btn:active {
+  transform: translateY(1px);
+}
+
+.action-btn[aria-pressed="true"] {
+  background: var(--btn-op-bg);
+  color: var(--btn-op-text);
+  border-color: var(--btn-op-border);
+}
+
+.action-btn .btn-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-left: 0.2rem;
+}
+
+#scientificToggleBtn {
+  width: auto;
+  padding: 0 0.65rem;
+}
+
+.history-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: 10px;
+  background: #6366f1;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--bg-primary);
+}
+
+/* Theme Dropdown Menu */
+.theme-dropdown-container {
+  position: relative;
+}
+
+.theme-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 190px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+  padding: 0.4rem;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+  transition: all var(--transition-fast);
+}
+
+.theme-option:hover {
+  background: var(--btn-num-hover);
+  color: var(--text-primary);
+}
+
+.theme-option.active {
+  background: var(--btn-op-bg);
+  color: var(--btn-op-text);
+  font-weight: 600;
+}
+
+.theme-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot-obsidian { background: linear-gradient(135deg, #6366f1, #38bdf8); }
+.dot-cyberpunk { background: linear-gradient(135deg, #f43f5e, #facc15); }
+.dot-aurora { background: linear-gradient(135deg, #10b981, #34d399); }
+.dot-platinum { background: linear-gradient(135deg, #94a3b8, #cbd5e1); }
+
+/* --------------------------------------------------------------------------
+   5. Calculator Glass Card
+   -------------------------------------------------------------------------- */
+.calculator-card {
+  width: 100%;
+  background: var(--bg-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.calculator-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+}
+
+/* Memory Status Bar */
+.memory-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.1rem 0.25rem;
+  font-size: 0.75rem;
+}
+
+.memory-chip {
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.memory-chip.active {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+}
+
+.memory-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.mem-btn {
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+
+.mem-btn:hover {
+  background: var(--btn-num-hover);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.mem-btn:active {
+  transform: scale(0.94);
+}
+
+.copy-display-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+
+.copy-display-btn:hover {
+  background: var(--btn-num-hover);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+/* --------------------------------------------------------------------------
+   6. High-Tech Display Screen
+   -------------------------------------------------------------------------- */
+.calculator-screen {
+  background: var(--bg-screen);
+  border: 1px solid var(--border-subtle);
+  border-radius: 18px;
+  padding: 1.15rem 1.25rem;
+  box-shadow: var(--shadow-inner-screen);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 130px;
+  position: relative;
+  overflow: hidden;
+}
+
+.screen-history-line {
+  min-height: 1.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  text-align: right;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+.screen-history-line::-webkit-scrollbar {
+  display: none;
+}
+
+.screen-main-line {
+  margin: 0.35rem 0;
+  overflow: hidden;
+}
+
+.screen-input-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.operator-preview {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--btn-op-text);
+  flex-shrink: 0;
+}
+
+.screen-main-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
+  line-height: 1.1;
+  word-break: break-all;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+  transition: font-size 0.15s ease;
+}
+
+/* Auto-scale classes based on character length */
+.screen-main-value.text-lg { font-size: 2.2rem; }
+.screen-main-value.text-md { font-size: 1.75rem; }
+.screen-main-value.text-sm { font-size: 1.35rem; }
+.screen-main-value.text-xs { font-size: 1.1rem; }
+
+/* Real-Time Preview Line */
+.screen-preview-line {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  min-height: 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  color: var(--text-preview);
+  opacity: 0.9;
+}
+
+.preview-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.7;
+}
+
+.preview-value {
+  font-weight: 600;
+}
+
+/* Shake animation on invalid calculation */
+@keyframes shakeScreen {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.calculator-screen.shake {
+  animation: shakeScreen 0.4s ease-in-out;
+  border-color: rgba(239, 68, 68, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   7. Expandable Scientific Panel
+   -------------------------------------------------------------------------- */
+.scientific-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.55rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border-subtle);
+  animation: fadeInDown 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.btn-sci {
+  height: 44px;
+  background: var(--btn-fn-bg);
+  border: 1px solid var(--btn-fn-border);
+  border-radius: 12px;
+  color: var(--btn-fn-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.btn-sci:hover {
+  background: var(--btn-fn-hover);
+  color: var(--text-primary);
+  border-color: var(--border-focus);
+}
+
+.btn-sci:active {
+  transform: scale(0.95);
+}
+
+.btn-sci .btn-sub {
+  font-size: 0.7rem;
+  margin-left: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Keypad Matrix (CSS Grid)
+   -------------------------------------------------------------------------- */
+.keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.65rem;
+}
+
+/* General Button Styles */
+.calc-btn {
+  height: 62px;
+  border-radius: var(--btn-radius);
+  font-size: 1.35rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: background var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.calc-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+.calc-btn:active,
+.calc-btn.key-active {
+  transform: translateY(2px) scale(0.97);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Number Buttons */
+.btn-num {
+  background: var(--btn-num-bg);
+  color: var(--btn-num-text);
+  border: 1px solid var(--btn-num-border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.4rem;
+}
+
+.btn-num:hover {
+  background: var(--btn-num-hover);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+/* Operator Buttons (+, -, *, /) */
+.btn-operator {
+  background: var(--btn-op-bg);
+  color: var(--btn-op-text);
+  border: 1px solid var(--btn-op-border);
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.btn-operator:hover {
+  background: var(--btn-op-hover);
+  box-shadow: 0 0 16px var(--btn-op-border);
+}
+
+.btn-percent {
+  font-size: 1.25rem;
+}
+
+/* Functional Buttons (Parentheses, +/-) */
+.btn-function {
+  background: var(--btn-fn-bg);
+  color: var(--btn-fn-text);
+  border: 1px solid var(--btn-fn-border);
+  font-size: 1.25rem;
+}
+
+.btn-function:hover {
+  background: var(--btn-fn-hover);
+}
+
+/* Clear (AC) Button */
+.btn-clear {
+  background: var(--btn-clear-bg);
+  color: var(--btn-clear-text);
+  border: 1px solid var(--btn-clear-border);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.btn-clear:hover {
+  background: var(--btn-clear-hover);
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.35);
+}
+
+/* Delete (DEL) Button */
+.btn-del {
+  background: var(--btn-fn-bg);
+  color: var(--btn-fn-text);
+  border: 1px solid var(--btn-fn-border);
+}
+
+.btn-del:hover {
+  background: var(--btn-fn-hover);
+  color: #fca5a5;
+}
+
+/* Equals (=) Button */
+.btn-equals {
+  background: var(--btn-equals-bg);
+  color: var(--btn-equals-text);
+  border: none;
+  font-size: 1.7rem;
+  font-weight: 700;
+  box-shadow: var(--btn-equals-shadow);
+}
+
+.btn-equals:hover {
+  background: var(--btn-equals-hover);
+  box-shadow: 0 10px 28px -2px rgba(99, 102, 241, 0.65);
+}
+
+/* Active Highlight Wave Effect */
+.calc-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+  pointer-events: none;
+}
+
+.calc-btn:active::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition: 0s;
+}
+
+/* --------------------------------------------------------------------------
+   9. Calculation History Drawer
+   -------------------------------------------------------------------------- */
+.history-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 360px;
+  max-width: 90vw;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border-subtle);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.history-drawer.open {
+  transform: translateX(0);
+}
+
+.history-header {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.history-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--text-primary);
+}
+
+.history-title-wrap h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.history-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.clear-history-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+
+.clear-history-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.close-drawer-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  transition: all var(--transition-fast);
+}
+
+.close-drawer-btn:hover {
+  background: var(--btn-num-hover);
+  color: var(--text-primary);
+}
+
+.history-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  color: var(--text-muted);
+  gap: 0.75rem;
+}
+
+.history-empty p {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.history-empty span {
+  font-size: 0.8rem;
+}
+
+.history-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.history-card:hover {
+  border-color: var(--border-focus);
+  background: var(--btn-num-hover);
+  transform: translateY(-2px);
+}
+
+.history-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.history-time {
+  font-size: 0.7rem;
+}
+
+.history-item-exp {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  word-break: break-all;
+}
+
+.history-item-res {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-preview);
+  text-align: right;
+}
+
+.history-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+  padding-top: 0.35rem;
+  border-top: 1px dashed var(--border-subtle);
+}
+
+.history-mini-btn {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.history-mini-btn:hover {
+  background: var(--btn-op-bg);
+  color: var(--btn-op-text);
+}
+
+/* --------------------------------------------------------------------------
+   10. Modal Dialogs & Toasts
+   -------------------------------------------------------------------------- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  padding: 1.5rem;
+  animation: modalPop 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.94); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.modal-header h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.modal-close-btn:hover {
+  background: var(--btn-num-hover);
+  color: var(--text-primary);
+}
+
+.shortcuts-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-height: 55vh;
+  overflow-y: auto;
+  padding-right: 0.35rem;
+}
+
+.shortcut-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.5rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+}
+
+.shortcut-row .keys kbd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  padding: 0.2rem 0.45rem;
+  border-radius: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.shortcut-row .desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.modal-footer {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-primary {
+  padding: 0.65rem 1.4rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6);
+  transform: translateY(-1px);
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.toast {
+  padding: 0.65rem 1.25rem;
+  border-radius: 24px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: toastIn 0.3s cubic-bezier(0.4, 0, 0.2, 1), toastOut 0.3s cubic-bezier(0.4, 0, 0.2, 1) 2.4s forwards;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-12px); }
+}
+
+/* --------------------------------------------------------------------------
+   11. Footer
+   -------------------------------------------------------------------------- */
+.app-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.footer-copy {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.footer-copy strong {
+  color: var(--text-secondary);
+}
+
+.author-name {
+  color: #818cf8;
+  font-weight: 600;
+}
+
+.footer-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   12. Responsive Design & Touch Ergonomics
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  .app-container {
+    padding: 0.75rem 0.5rem;
+    justify-content: flex-start;
+  }
+
+  .calculator-card {
+    padding: 1.15rem 0.85rem;
+    border-radius: 22px;
+    gap: 0.85rem;
+  }
+
+  .calc-btn {
+    height: 56px;
+    border-radius: 14px;
+    font-size: 1.25rem;
+  }
+
+  .screen-main-value {
+    font-size: 2.25rem;
+  }
+
+  .scientific-panel {
+    gap: 0.4rem;
+  }
+
+  .btn-sci {
+    height: 38px;
+    font-size: 0.85rem;
+  }
+}
