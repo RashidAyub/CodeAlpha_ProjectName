@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AuraBeats — Modern, professional, responsive music player web application built with HTML5, CSS3, and Vanilla JavaScript by Rashid Ayub for CodeAlpha Internship.">
+  <meta name="author" content="Rashid Ayub">
+  <meta name="theme-color" content="#0d0f17">
+  <title>AuraBeats — Professional Web Music Player | CodeAlpha Task 4</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Gradient Background Mesh -->
+  <div class="ambient-glow glow-1" aria-hidden="true"></div>
+  <div class="ambient-glow glow-2" aria-hidden="true"></div>
+  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">Aura<span class="accent-text">Beats</span></span>
+          <span class="brand-badge">PRO PLAYER</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#player-section" class="nav-link active">Now Playing</a>
+        <a href="#playlist-section" class="nav-link">Playlist</a>
+        <button id="shortcuts-btn" class="nav-btn" title="View Keyboard Shortcuts (or press ?)" aria-label="Keyboard Shortcuts">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M6 12h.001M10 12h.001M14 12h.001M18 12h.001M7 16h10"></path>
+          </svg>
+          <span>Shortcuts</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Application Wrapper -->
+  <main class="player-wrapper">
+    <div class="player-layout">
+
+      <!-- Left Column: Primary Player -->
+      <section class="player-card glass-panel" id="player-section" aria-label="Music Player Controls">
+        <!-- Card Top Bar: Status & Heart Button -->
+        <div class="player-top-bar">
+          <div class="playback-badge" id="playback-badge">
+            <span class="pulse-dot"></span>
+            <span id="player-status-text">Ready to Play</span>
+          </div>
+
+          <div class="top-actions">
+            <button id="like-btn" class="icon-btn heart-btn" aria-label="Favorite song" title="Favorite track (L)">
+              <svg class="heart-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Album Artwork Section with Vinyl & Spinning Animation -->
+        <div class="artwork-container">
+          <div class="vinyl-disc" id="vinyl-disc" aria-hidden="true">
+            <div class="vinyl-grooves"></div>
+            <div class="vinyl-center"></div>
+          </div>
+          <div class="artwork-wrapper" id="artwork-wrapper">
+            <img id="album-art" src="assets/images/royalty.png" alt="Album Cover Artwork" loading="lazy">
+            <div class="artwork-overlay" aria-hidden="true">
+              <div class="disc-hole"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Song Metadata -->
+        <div class="song-meta">
+          <h1 class="song-title" id="song-title">Royalty</h1>
+          <p class="song-artist" id="song-artist">Maestro Chives, Egzod, Neoni</p>
+          <div class="song-subdetails">
+            <span class="album-badge" id="song-album">Royalty NCS</span>
+            <span class="dot-separator">•</span>
+            <span class="genre-badge" id="song-genre">Electronic / Trap</span>
+          </div>
+        </div>
+
+        <!-- Realtime Soundwave Visualizer Canvas -->
+        <div class="visualizer-container" aria-hidden="true">
+          <canvas id="visualizer-canvas" width="380" height="42"></canvas>
+        </div>
+
+        <!-- Progress Bar and Timers -->
+        <div class="progress-section">
+          <div class="time-display">
+            <span id="current-time">0:00</span>
+            <span id="total-duration">0:00</span>
+          </div>
+          <div class="progress-bar-container" id="progress-container" role="progressbar" aria-label="Song progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+            <div class="progress-buffer" id="progress-buffer"></div>
+            <div class="progress-fill" id="progress-fill">
+              <div class="progress-thumb" id="progress-thumb"></div>
+            </div>
+            <div class="progress-hover-time" id="progress-hover-time">0:00</div>
+          </div>
+        </div>
+
+        <!-- Core Playback Controls -->
+        <div class="playback-controls">
+          <button id="shuffle-btn" class="control-btn toggle-btn" aria-label="Toggle Shuffle" title="Shuffle (S)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 3 21 3 21 8"></polyline>
+              <line x1="4" y1="20" x2="21" y2="3"></line>
+              <polyline points="21 16 21 21 16 21"></polyline>
+              <line x1="15" y1="15" x2="21" y2="21"></line>
+              <line x1="4" y1="4" x2="9" y2="9"></line>
+            </svg>
+            <span class="active-indicator"></span>
+          </button>
+
+          <button id="prev-btn" class="control-btn nav-action-btn" aria-label="Previous Track" title="Previous Song (Left Arrow / P)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="19 20 9 12 19 4 19 20"></polygon>
+              <line x1="5" y1="19" x2="5" y2="5"></line>
+            </svg>
+          </button>
+
+          <button id="play-pause-btn" class="play-main-btn" aria-label="Play song" title="Play / Pause (Spacebar)">
+            <!-- Play SVG -->
+            <svg id="play-icon" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="6 3 20 12 6 21 6 3"></polygon>
+            </svg>
+            <!-- Pause SVG -->
+            <svg id="pause-icon" class="hidden" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+              <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+            </svg>
+          </button>
+
+          <button id="next-btn" class="control-btn nav-action-btn" aria-label="Next Track" title="Next Song (Right Arrow / N)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 4 15 12 5 20 5 4"></polygon>
+              <line x1="19" y1="5" x2="19" y2="19"></line>
+            </svg>
+          </button>
+
+          <button id="repeat-btn" class="control-btn toggle-btn" aria-label="Toggle Repeat" title="Repeat (R)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="17 1 21 5 17 9"></polyline>
+              <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+              <polyline points="7 23 3 19 7 15"></polyline>
+              <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+            </svg>
+            <span class="repeat-one-badge" id="repeat-one-badge">1</span>
+            <span class="active-indicator"></span>
+          </button>
+        </div>
+
+        <!-- Bottom Secondary Controls: Volume & Autoplay -->
+        <div class="secondary-controls">
+          <!-- Volume Group -->
+          <div class="volume-group">
+            <button id="mute-btn" class="icon-btn volume-btn" aria-label="Mute / Unmute" title="Mute / Unmute (M)">
+              <svg id="vol-high-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <svg id="vol-low-icon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+              <svg id="vol-muted-icon" class="hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                <line x1="23" y1="9" x2="17" y2="15"></line>
+                <line x1="17" y1="9" x2="23" y2="15"></line>
+              </svg>
+            </button>
+            <div class="volume-slider-wrapper">
+              <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.8" aria-label="Volume Slider" title="Volume (Up/Down Arrow)">
+              <div class="volume-bar-fill" id="volume-bar-fill"></div>
+            </div>
+            <span class="volume-percent" id="volume-percent">80%</span>
+          </div>
+
+          <!-- Autoplay Switch -->
+          <div class="autoplay-group" title="Automatically play next song when current track ends">
+            <span class="autoplay-label">Autoplay</span>
+            <label class="switch" for="autoplay-toggle">
+              <input type="checkbox" id="autoplay-toggle" checked aria-label="Toggle Autoplay">
+              <span class="slider round"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Column: Interactive Playlist & Search -->
+      <section class="playlist-card glass-panel" id="playlist-section" aria-label="Song Queue and Playlist">
+        <!-- Playlist Header & Tabs -->
+        <div class="playlist-header">
+          <div class="playlist-title-wrap">
+            <h2 class="playlist-title">Queue & Playlist</h2>
+            <span class="playlist-count" id="playlist-count">5 Songs</span>
+          </div>
+
+          <div class="playlist-tabs">
+            <button class="tab-btn active" data-tab="all" id="tab-all">All Tracks</button>
+            <button class="tab-btn" data-tab="favorites" id="tab-favorites">
+              <span>Liked</span>
+              <span class="badge" id="favorites-count">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Search Input Bar -->
+        <div class="search-bar">
+          <div class="search-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <input type="text" id="search-input" placeholder="Search track, artist, or album..." aria-label="Search playlist">
+          <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Clear search">✕</button>
+        </div>
+
+        <!-- Playlist Tracks Container -->
+        <div class="playlist-items-container" id="playlist-container" role="list">
+          <!-- Dynamically populated via script.js -->
+        </div>
+
+        <!-- Empty Results Message -->
+        <div class="empty-state hidden" id="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <p class="empty-title">No matching songs found</p>
+          <p class="empty-subtitle">Try adjusting your search terms or filter.</p>
+        </div>
+
+        <!-- Live Audio Notice Banner / Graceful Error Handler -->
+        <div class="audio-notice hidden" id="audio-notice" role="alert">
+          <div class="notice-icon">⚠️</div>
+          <div class="notice-text">
+            <strong id="notice-title">Notice</strong>
+            <p id="notice-desc">Playback issue detected.</p>
+          </div>
+          <button id="notice-dismiss-btn" class="notice-dismiss">Dismiss</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Keyboard Shortcuts Modal -->
+  <div class="modal-backdrop hidden" id="shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h3 id="modal-title">Keyboard Shortcuts</h3>
+        <button id="close-modal-btn" class="close-modal-btn" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcut-row">
+          <div class="key-badge">Space</div>
+          <span>Play / Pause</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">←</div>
+          <span>Seek Backward 5s</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">→</div>
+          <span>Seek Forward 5s</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">N</div>
+          <span>Next Song</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">P</div>
+          <span>Previous Song</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">↑ / ↓</div>
+          <span>Volume Up / Down</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">M</div>
+          <span>Mute / Unmute Volume</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">S</div>
+          <span>Toggle Shuffle</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">R</div>
+          <span>Cycle Repeat (Off / All / One)</span>
+        </div>
+        <div class="shortcut-row">
+          <div class="key-badge">L</div>
+          <span>Like / Favorite Track</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p class="footer-credits">
+        <strong>AuraBeats</strong> &copy; 2026 Rashid Ayub. Built for <strong>CodeAlpha Frontend Development Internship</strong>.
+      </p>
+      <div class="footer-tags">
+        <span class="tech-tag">HTML5 Audio API</span>
+        <span class="tech-tag">CSS3 Glassmorphism</span>
+        <span class="tech-tag">Vanilla JavaScript</span>
+        <span class="tech-tag">NCS Royalty-Free</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Hidden Native Audio Element -->
+  <audio id="audio-player" preload="metadata"></audio>
+
+  <!-- Script File -->
+  <script src="script.js"></script>
+</body>
+</html>
